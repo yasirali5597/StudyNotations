@@ -45,7 +45,7 @@ export default function EditProfile() {
                 name="firstName"
                 id="firstName"
                 placeholder="Enter first name"
-                className="form-style rounded-md p-2 bg-gray-400 "
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("firstName", { required: true })}
                 defaultValue={user?.firstName}
               />
@@ -64,7 +64,7 @@ export default function EditProfile() {
                 name="lastName"
                 id="lastName"
                 placeholder="Enter last name"
-                className="form-style rounded-md p-2 bg-gray-400 "
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("lastName", { required: true })}
                 defaultValue={user?.lastName}
               />
@@ -85,7 +85,7 @@ export default function EditProfile() {
                 type="date"
                 name="dateOfBirth"
                 id="dateOfBirth"
-                className="form-style rounded-md p-2 bg-gray-400 "
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("dateOfBirth", {
                   required: {
                     value: true,
@@ -112,7 +112,7 @@ export default function EditProfile() {
                 type="text"
                 name="gender"
                 id="gender"
-                className="form-style rounded-md p-2 bg-gray-400 "
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("gender", { required: true })}
                 defaultValue={user?.additionalDetails?.gender}
               >
@@ -134,7 +134,7 @@ export default function EditProfile() {
 
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="contactNumber" className="lable-style">
+              <label htmlFor="contactNumber" className="lable-style first-letter text-white">
                 Contact Number
               </label>
               <input
@@ -142,7 +142,7 @@ export default function EditProfile() {
                 name="contactNumber"
                 id="contactNumber"
                 placeholder="Enter Contact Number"
-                className="form-style rounded-md p-2 bg-gray-400 "
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("contactNumber", {
                   required: {
                     value: true,
@@ -168,7 +168,7 @@ export default function EditProfile() {
                 name="about"
                 id="about"
                 placeholder="Enter Bio Details"
-                className="form-style rounded-md p-2 bg-gray-400"
+                className="form-style rounded-md p-2 bg-gray-700 text-gray-400"
                 {...register("about", { required: true })}
                 defaultValue={user?.additionalDetails?.about}
               />

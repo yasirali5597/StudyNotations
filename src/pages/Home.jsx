@@ -18,12 +18,12 @@ const Home = () => {
       {/*Section1  */}
       <div
         className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center 
-      text-white justify-between"
+      text-white justify-between "
       >
         <Link to={"/signup"}>
           <div
             className=" group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200
-            transition-all duration-200 hover:scale-95 w-fit"
+            transition-all duration-200 hover:scale-95 w-fit "
           >
             <div
               className="flex border border-gray-600 flex-row items-center gap-2 rounded-full px-10 py-[5px]
@@ -87,7 +87,16 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeblock={`<!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Example</title>
+              </head>
+              <body>
+              </body>
+              </html>`}
             codeColor={"text-yellow-700"}
           />
         </div>
@@ -116,7 +125,17 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeblock={`<!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Example</title>
+              </head>
+              <body>
+              
+              </body>
+              </html>`}
             codeColor={"text-emerald-900"}
           />
         </div>

@@ -80,7 +80,7 @@ export default function MyProfile() {
 
         <div className="mb-5 flex items-center justify-between">
 
-          <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold ">
             About
           </p>
 

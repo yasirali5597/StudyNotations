@@ -8,6 +8,7 @@ import {configureStore} from "@reduxjs/toolkit"
 // import rootReducer from "./reducers";  // adjust path if needed 
 import authReducer from "./slice/authSlice"
 import profileReducer from "./slice/profileSlice"
+import courseReducer from "./slice/courseSlice"
 import cartReducer from "./slice/cartSlice"
 
 // import { combineReducers } from "redux";
@@ -19,6 +20,8 @@ const store = configureStore({
     auth: authReducer,
     profile: profileReducer,
     cart: cartReducer,
+    // course:courseReducer
+    course: courseReducer,
   },
 });
 console.log(profileReducer)

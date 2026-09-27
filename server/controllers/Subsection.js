@@ -60,8 +60,8 @@ return res.status(500).json({
 
   exports.updateSubSection = async (req, res) => {
     try {
-      const { sectionId, title, description } = req.body
-      const subSection = await SubSection.findById(sectionId)
+      const { sectionId,subSectionId,  title, description } = req.body
+      const subSection = await SubSection.findById(subSectionId)
   
       if (!subSection) {
         return res.status(404).json({
@@ -88,9 +88,12 @@ return res.status(500).json({
       }
   
       await subSection.save()
+      const updateSection = await Section.findById(sectionId).populate("subSection")
+
   
       return res.json({
         success: true,
+        data: updateSection,
         message: "Section updated successfully",
       })
     } catch (error) {
@@ -120,9 +123,12 @@ return res.status(500).json({
           .status(404)
           .json({ success: false, message: "SubSection not found" })
       }
+
+      const updateSection = await Section.findById(sectionId).populate("subSection")
   
       return res.json({
         success: true,
+        data: updateSection,
         message: "SubSection deleted successfully",
       })
     } catch (error) {

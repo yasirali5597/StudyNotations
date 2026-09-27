@@ -8,8 +8,8 @@ exports.auth = async (req, res,next) => {
     // extract token
     const token =
       req.cookies.token ||
-      req.body ||
-      req.header("Authorisation ")?.replace("Bearer", " ");
+      req.body.token ||
+      req.header("Authorization")?.replace("Bearer ", "");
     // if token missing then return response
     if (!token) {
       return res.status(401).json({
@@ -59,7 +59,7 @@ exports.isStudent = async(req,res,next) =>{
 // for instructor 
 exports.isInstructor = async(req,res,next) =>{
     try{
-        if(req.user.accountType !== "instructor"){
+        if(req.user.accountType !== "Instructor"){
             return res.status(500).json({
                 success:false,
                 message: "this is a protected route for instructor only"
@@ -77,9 +77,11 @@ exports.isInstructor = async(req,res,next) =>{
 
 exports.isAdmin = async(req,res,next) =>{
     try{
-        if(req.user.accountType !== "Admin"){
+        if(req.user.accountType !== "Instructor"){
             return res.status(500).json({
                 success:false,
+                // message: req.user.accountType,
+                accountType: req.user.accountType,
                 message: "this is a protected route for isadmin only"
             })
         }

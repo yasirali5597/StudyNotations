@@ -24,7 +24,7 @@ export default function DeleteAccount() {
           <FiTrash2 className="text-3xl text-red-500" />
         </div>
         <div className="flex flex-col space-y-2">
-          <h2 className="text-lg font-semibold text-white">
+          <h2 className="text-lg font-semibold text-white ">
             Delete Account
           </h2>
           <div className="w-3/5 text-pink-25">

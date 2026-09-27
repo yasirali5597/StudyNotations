@@ -6,13 +6,14 @@ const courseSchema = new mongoose.Schema({
             type: String,
         },
         courseDescription: {
-            type: mongoose.Schema.Types.ObjectId,
+            // type: mongoose.Schema.Types.ObjectId,
+             type: String,
             ref: "User",
             required: true
         },
         instructor: {
             type: mongoose.Schema.Types.ObjectId,
-            requred: true,
+            required: true,
             ref: "User" , 
         },
         whatyouWillLearn: {

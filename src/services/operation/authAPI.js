@@ -83,6 +83,9 @@ export function signUp(
       navigate("/login");
     } catch (error) {
       console.log("SIGNUP API ERROR............", error);
+      console.log("sign up errror " , error.response)
+      console.log("sign up errror " , error.response.data)
+
       toast.error("Signup Failed");
       navigate("/signup");
     }
@@ -119,6 +122,8 @@ export function login(email, password, navigate) {
       navigate("/dashboard/my-profile");
     } catch (error) {
       console.log("LOGIN API ERROR............", error);
+      console.log("LOGIN API ERROR............", error.data);
+
       toast.error("Login Failed");
     }
     dispatch(setLoading(false));

@@ -1,3 +1,4 @@
+// const { default: SubSectionModal } = require("../../src/components/core/Dashboard/AddCourse/CourseBuilder/SubSectionModal");
 const  Section = require("../models/Section");
 const Course = require("../models/course");
 
@@ -45,7 +46,21 @@ exports.createSection = async (req,res) =>{
 exports.updateSection = async(req,res)=>{
     try{
         // data input 
-         const {sectionName , sectionId} = req.body;
+         const {sectionName , sectionId , courseId} = req.body;
+         const section = await Section.findByIdAndUpdate(
+            sectionId, 
+            {sectionName},
+            {new:true},
+         )
+
+
+         const course = await Course.findById(courseId)
+         .populate({
+            path:"courseContent",
+            populate:{
+                path:"subSection",
+            },
+         }).exec();
         // data viladations 
         if(!sectionName , sectionId ) {
             return res.status(400).json({
@@ -55,10 +70,12 @@ exports.updateSection = async(req,res)=>{
 
         }
         // update data 
-        const section = await Section.findByIdAndUpdate(sectionId , {sectionName} , {new:true})
+        // const section = await Section.findByIdAndUpdate(sectionId , {sectionName} , {new:true})
         return res.status(200).json({
             success:true,
+            message:section,
             message:"sections updated successfully ", 
+            data:course,
         })
 
     }catch(error){
@@ -72,21 +89,66 @@ exports.updateSection = async(req,res)=>{
 }
 
 exports.deleteSection = async(req, res) =>{
+        let result = null; 
+        const toastId = toast.loading("loading....")
     try {
          
-        const {sectionId }= req.params;
-       // HW -> req.params -> text 
-        // get id 
-        // find the findbyid 
-        await Section.findByIdAndDelete( sectionId)
-// todo [testing ] do we need to delete teh entry from the course schema 
+//         const {sectionId }= req.params;
+//        // HW -> req.params -> text 
+//         // get id 
+//         // find the findbyid 
+//         await Section.findByIdAndDelete( sectionId)
+// // todo [testing ] do we need to delete teh entry from the course schema 
 
 
-        return res.status(200).json({
-            success:true,
-            message:"you are successfully deleted the sections"
+//         return res.status(200).json({
+//             success:true,
+//             message:"you are successfully deleted the sections"
+//         })
+//         //
+
+
+        const {sectionId , courseId } = req.body; 
+        await Course.findByIdAndUpdate(courseId, {
+            $pull: {
+                courseContent: sectionId,
+            }
         })
-        //
+
+        const section = await Section.findById(sectionId);
+        console.log((sectionId , courseId));
+
+        if(!section){
+            return res.status(404).json({
+                success:false,
+                message:"Section not found "
+            })
+        }
+
+        // delete sub secion 
+         await SubSection.deleteMany({_id: {$in: section.subSection}});
+
+         await Section.findByIdAndDelete(sectionId);
+
+         // find the updated course and return 
+
+         const course = await Course.findById(CourseId).populate({
+            path:"courseContent",
+            populate: {
+                path: "subSection"
+            }
+         })
+         .exec();
+
+         res.status(200).json({
+            success:true,
+            message:"Section deleted ",
+            data:course
+         })
+
+
+
+
 
          
     }catch(error){

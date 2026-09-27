@@ -27,21 +27,21 @@ export default function ProfileDropdown() {
           alt={`profile-${user?.firstName}`}
           className="aspect-square w-[30px] rounded-full object-cover"
         />
-        <AiOutlineCaretDown className="text-sm text-richblack-100" />
+        <AiOutlineCaretDown className="text-sm text-white" />
       </div>
       </button>
       {open && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute top-[125%] right-0 z-[1000] w-[180px]  divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800 "
+          className="absolute top-[125%] right-0 z-[1000] w-[180px]  divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800 mt-2"
           ref={ref}
         >
           <Link to="/dashboard/my-profile" 
             onClick={() => setOpen(false)}
-            className="flex w-full items-center gap-x-1 py-[17px] px-[12px] text-sm text-white hover:bg-gray-700 hover:text-gray-100 cursor-pointer mt-2"
+            className="flex w-full items-center gap-x-1 py-[15px] px-[12px] text-sm text-white hover:bg-gray-700 hover:text-gray-100 cursor-pointer "
           >
             {/* <div className="flex w-full items-center gap-x-2  px-[12px] text-sm text-white  cursor-pointer"> */}
-              <VscDashboard className="text-lg" />
+              <VscDashboard className="text-lg " />
               Dashboard
             {/* </div> */}
           </Link>

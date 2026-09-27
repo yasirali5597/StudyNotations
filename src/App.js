@@ -23,6 +23,8 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
+import AddCourse from "../src/components/core/Dashboard/AddCourse/index";
+import Catalog from "./pages/Catalog";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,12 +33,15 @@ const App = () => {
   const { user } = useSelector((state) => state.profile);
 
   return (
-    <div className="w-screen min-h-screen bg-black  bg-richblack-900  flex flex-col font-inter">
+    <div className="w-screen min-h-screen bg-black    flex flex-col font-inter">
       <Navbar />
       <Toaster position="top-center" />
 
       <Routes>
         <Route path="/" element={<Home />} />
+
+        <Route path="Catalog/:catalogName" element={<Catalog />} />
+
         <Route
           path="signup"
           element={
@@ -45,6 +50,7 @@ const App = () => {
             </OpenRoute>
           }
         />
+
         <Route
           path="login"
           element={
@@ -66,7 +72,7 @@ const App = () => {
           path="verify-email"
           element={
             // <OpenRoute>
-              <VerifyEmail />
+            <VerifyEmail />
             //  </OpenRoute>
           }
         />
@@ -109,7 +115,7 @@ const App = () => {
           <Route path="dashboard/settings" element={<Settings />} />
           {/* <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} /> */}
 
-           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+          {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="dashboard/cart" element={<Cart />} />
               <Route
@@ -117,8 +123,13 @@ const App = () => {
                 element={<EnrolledCourses />}
               />
             </>
-          )} 
+          )} */}
 
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+            </>
+          )}
         </Route>
 
         <Route path="*" element={<Error />} />
