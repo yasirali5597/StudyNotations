@@ -405,30 +405,66 @@ exports.getFullCourseDetails = async (req, res) => {
   }
 };
 
+// exports.getInstructorCourses = async (req, res) => {
+//   try {
+//     // get the isntructor id from the authentication user or requrest body
+//     const instructorId = req.user.id;
+
+//     // find all courses belonging to the instructor
+//     const instructorCourse = await Course.find({
+//       instructor: instructorId,
+//     }).sort({ createdAt: -1 });
+
+//     // return the instructors course
+//     res.status(200).json({
+//       success: true,
+//       data: instructorCourse,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "failed to retrived instructor course ",
+//       error: error.message,
+//     });
+//   }
+// };
+
+
+
 exports.getInstructorCourses = async (req, res) => {
   try {
-    // get the isntructor id from the authentication user or requrest body
     const instructorId = req.user.id;
 
-    // find all courses belonging to the instructor
     const instructorCourse = await Course.find({
       instructor: instructorId,
-    }).sort({ createdAt: -1 });
+    })
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .sort({ createdAt: -1 });
 
-    // return the instructors course
     res.status(200).json({
       success: true,
       data: instructorCourse,
     });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
       success: false,
-      message: "failed to retrived instructor course ",
+      message: "failed to retrieve instructor course",
       error: error.message,
     });
   }
 };
+
+
+//dfdf
+
 
 exports.deleteCourse = async (req, res) => {
   try {

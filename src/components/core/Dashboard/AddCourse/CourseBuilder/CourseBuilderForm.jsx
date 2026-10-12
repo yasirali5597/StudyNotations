@@ -230,42 +230,62 @@ export default function CourseBuilderForm() {
   };
 
   const goToNext = () => {
-    // if (course.courseContent.length === 0) {
-    //   toast.error("Please add atleast one section");
-    //   return;
-    // }
+    if (course.courseContent.length === 0) {
+      toast.error("Please add atleast one section");
+      return;
+    }
     if (
-      course.courseContent.some((section) => section.subSection.length === 0)
+      course.courseContent.some((section) => section?.subSection?.length === 0)
     ) {
-      toast.error("Please add atleast one lectre in each section");
+      toast.error("Please add atleast one lecture in each section");
       return;
     }
     dispatch(setStep(3));
   };
+
+//   const goToNext = () => {
+//   if (!course?.courseContent || course.courseContent.length === 0) {
+//     toast.error("Please add at least one section");
+//     return;
+//   }
+
+//   if (
+//     course.courseContent.some(
+//       (section) => (section?.subSection?.length ?? 0) === 0
+//     )
+//   ) {
+//     toast.error("Please add at least one lecture in each section");
+//     return;
+//   }
+
+//   dispatch(setStep(3));
+// };
+
+
 
   const goBack = () => {
     dispatch(setStep(1));
     dispatch(setEditCourse(true));
   };
 
-  const handleChangeEditSectionName = (sectionId, sectionName) => {
-    if (editSectionName === sectionId) {
-      cancelEdit();
-      return;
-    }
-    setEditSectionName(sectionId);
-    setValue("sectionName", sectionName);
-  };
-
-  // const handleChangeEditSectionName = (sectionId , sectionName) =>{
-  //   if(editSectionName === sectionId) {
+  // const handleChangeEditSectionName = (sectionId, sectionName) => {
+  //   if (editSectionName === sectionId) {
   //     cancelEdit();
   //     return;
   //   }
-  //     setEditSectionName(sectionId);
-  //     setValue("sectionName" , sectionName);
+  //   setEditSectionName(sectionId);
+  //   setValue("sectionName", sectionName);
+  // };
 
-  // }
+  const handleChangeEditSectionName = (sectionId , sectionName) =>{
+    if(editSectionName === sectionId) {
+      cancelEdit();
+      return;
+    }
+      setEditSectionName(sectionId);
+      setValue("sectionName" , sectionName);
+
+  }
 
   return (
     <div className="space-y-8 rounded-md border-[1px] border-gray-700 bg-gray-800 p-6">
@@ -311,9 +331,17 @@ export default function CourseBuilderForm() {
         </div>
       </form>
 
-      { course.courseContent.length > 0 && (
-        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
-      )}
+      <div>
+          {/* <p className="text-white">
+            Course Content Length: {course?.courseContent?.length}
+          </p> */}
+
+            {course?.courseContent?.length > 0 && (
+              <NestedView
+                handleChangeEditSectionName={handleChangeEditSectionName}
+              />
+            )}
+      </div>
 
       {/* Next Prev Button */}
       <div className="flex justify-end gap-x-3">

@@ -69,7 +69,7 @@ const SubSectionModal = ({
     }
 
     if (currentValues.lectureVideo !== modalData.videoUrl) {
-      formData.append("video", currentValues.lectureVideo);
+      formData.append("videoFile", currentValues.lectureVideo);
     }
 
     setLoading(true);
@@ -78,9 +78,10 @@ const SubSectionModal = ({
     if (result) {
       //TODO: same check
       const updatedCourseContent = course.courseContent.map((section) =>
-      section.id === modalData.sectionId ? result: section );
-      const updatedCourse = {...course , courseContent:updatedCourseContent };
-      dispatch(setCourse(updatedCourse))
+        section.id === modalData ? result : section,
+      );
+      const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      dispatch(setCourse(updatedCourse));
     }
     setModalData(null);
     setLoading(false);
@@ -90,7 +91,7 @@ const SubSectionModal = ({
     if (view) return;
 
     if (edit) {
-      if (!isFormUpdated) {
+      if (!isFormUpdated()) {
         toast.error("No changes made to the form");
       } else {
         //edit krdo store me
@@ -98,14 +99,24 @@ const SubSectionModal = ({
       }
       return;
     }
+    
 
     //ADD
 
     const formData = new FormData();
+
+    // formData.append("videoFile", data.lectureVideo);
     formData.append("sectionId", modalData);
+
     formData.append("title", data.lectureTitle);
     formData.append("description", data.lectureDesc);
-    formData.append("video", data.lectureVideo);
+    // formData.append("timeDuration", data.timeDuration);
+    formData.append("videoFile", data.lectureVideo);
+
+    for (const [key, value] of formData.entries()) {
+      console.log("formData ", key, value);
+    }
+
     setLoading(true);
     //API CALL
     const result = await createSubSection(formData, token);
@@ -114,7 +125,8 @@ const SubSectionModal = ({
       //TODO: we will check for updatation
 
       const updatedCourseContent = course.courseContent.map((section) =>
-      section.id === modalData ? result : section,);
+        section.id === modalData ? result : section,
+      );
       const updatedCourse = { ...course, courseContent: updatedCourseContent };
       dispatch(setCourse(updatedCourse));
     }
@@ -122,51 +134,144 @@ const SubSectionModal = ({
     setLoading(false);
   };
 
+  // return (
+  //   <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+  //     {/* <div> */}
+  //       <div className="w-[90%] max-w-[700px] max-h-[90vh] overflow-y-auto rounded-xl bg-gray-900 p-6 shadow-2xl border border-gray-700">
+  //         <p>
+  //           {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
+  //         </p>
+  //         <button onClick={() => (!loading ? setModalData(null) : {})}>
+  //           <RxCross1 />
+  //         </button>
+  //       </div>
+  //       <form onSubmit={handleSubmit(onSubmit)}>
+  //         <Upload
+  //           name="lectureVideo"
+  //           label="Lecture Video"
+  //           register={register}
+  //           setValue={setValue}
+  //           errors={errors}
+  //           video={true}
+  //           viewData={view ? modalData.videoUrl : null}
+  //           editData={edit ? modalData.videoUrl : null}
+  //         />
+  //         <div>
+  //           <label className=" text-gray-300 font-bold mt-4 text-xl mb-2" >Lecture Title</label>
+  //           <input
+  //             id="lectureTitle"
+  //             placeholder="Enter Lecture Title"
+  //             {...register("lectureTitle", { required: true })}
+  //             className="w-full py-2 px-3 rounded-xl bg-gray-800 text-white text-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.lectureTitle && <span>Lecture Title is required</span>}
+  //         </div>
+  //         <div>
+  //           <label className=" text-gray-300 font-bold mt-4 text-xl mb-2  "  >Lecture Description</label>
+  //           <textarea
+  //             id="lectureDesc"
+  //             placeholder="Enter Lecture Description"
+  //             {...register("lectureDesc", { required: true })}
+  //             className="w-full min-h-[130px] my-4 px-3 py-2 rounded-xl bg-gray-800 text-white text-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.lectureDesc && <span>Lecture Description is required</span>}
+  //         </div>
+
+  //         {!view && (
+  //           <div>
+  //             <IconBtn
+  //               text={loading ? "Loading..." : edit ? "Save Changes" : "Save"}
+  //             />
+  //           </div>
+  //         )}
+  //       </form>
+  //     </div>
+  //   // </div>
+  // );
+
   return (
-    <div>
-      <div>
-        <div>
-          <p>
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      {/* Modal Box */}
+      <div className="w-[90%] max-w-[700px] max-h-[90vh] overflow-y-auto rounded-xl bg-gray-900 p-6 shadow-2xl border border-gray-700">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between border-b border-gray-700 pb-4">
+          <p className="text-2xl font-semibold text-white">
             {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
           </p>
-          <button onClick={() => (!loading ? setModalData(null) : {})}>
+
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => setModalData(null)}
+            className="text-gray-300 hover:text-white text-xl"
+          >
             <RxCross1 />
           </button>
         </div>
+
+        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Upload
-            name="lectureVideo"
-            label="Lecture Video"
-            register={register}
-            setValue={setValue}
-            errors={errors}
-            video={true}
-            viewData={view ? modalData.videoUrl : null}
-            editData={edit ? modalData.videoUrl : null}
-          />
-          <div>
-            <label>Lecture Title</label>
+          {/* Video Upload */}
+          <div className="mb-6">
+            <Upload
+              name="lectureVideo"
+              label="Lecture Video"
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              video={true}
+              viewData={view ? modalData.videoUrl : null}
+              editData={edit ? modalData.videoUrl : null}
+            />
+          </div>
+
+          {/* Lecture Title */}
+          <div className="mb-5">
+            <label className="mb-2 block text-lg font-semibold text-gray-300">
+              Lecture Title
+            </label>
+
             <input
               id="lectureTitle"
               placeholder="Enter Lecture Title"
-              {...register("lectureTitle", { required: true })}
-              className="w-full"
+              {...register("lectureTitle", {
+                required: true,
+              })}
+              className="w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-lg text-white outline-none focus:border-yellow-400"
             />
-            {errors.lectureTitle && <span>Lecture Title is required</span>}
+
+            {errors.lectureTitle && (
+              <span className="mt-1 block text-sm text-pink-400">
+                Lecture Title is required
+              </span>
+            )}
           </div>
-          <div>
-            <label>Lecture Description</label>
+
+          {/* Lecture Description */}
+          <div className="mb-6">
+            <label className="mb-2 block text-lg font-semibold text-gray-300">
+              Lecture Description
+            </label>
+
             <textarea
               id="lectureDesc"
               placeholder="Enter Lecture Description"
-              {...register("lectureDesc", { required: true })}
-              className="w-full min-h-[130px]"
+              {...register("lectureDesc", {
+                required: true,
+              })}
+              className="min-h-[130px] w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-lg text-white outline-none focus:border-yellow-400"
             />
-            {errors.lectureDesc && <span>Lecture Description is required</span>}
+
+            {errors.lectureDesc && (
+              <span className="mt-1 block text-sm text-pink-400">
+                Lecture Description is required
+              </span>
+            )}
           </div>
 
+          {/* Buttons */}
           {!view && (
-            <div>
+            <div className="flex justify-end border-t border-gray-700 pt-5">
               <IconBtn
                 text={loading ? "Loading..." : edit ? "Save Changes" : "Save"}
               />

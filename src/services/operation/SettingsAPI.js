@@ -90,6 +90,8 @@ export async function changePassword(token, formData) {
 }
 
 export function deleteProfile(token, navigate) {
+  // console.log("DELETE_PROFILE_API API RESPONSE............", token)
+  // console.log("DELETE_PROFILE_API API RESPONSE............", navigate)
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     try {
@@ -110,3 +112,4 @@ export function deleteProfile(token, navigate) {
     toast.dismiss(toastId)
   }
 }
+

@@ -326,17 +326,18 @@ import { MdNavigateNext } from "react-icons/md"
 import { useDispatch, useSelector } from "react-redux"
 
 import {
-  addCourseDetails,
-  editCourseDetails,
   fetchCourseCategories,
-} from "../../../../../services/operation/courseDetailsAPI"
-import { setCourse, setStep } from "../../../../../slice/courseSlice"
-import { COURSE_STATUS } from "../../../../../utils/constants"
-import IconBtn from "../../../../comman/IconsBtn"
-import Upload from "../Upload"
+  editCourseDetails,
+  addCourseDetails,
+}   from "../../../../../../services/operation/courseDetailsAPI";
+
+import { setCourse, setStep } from "../../../../../../slice/courseSlice"
+import { COURSE_STATUS } from "../../../../../../utils/constants"
+import IconBtn from "../../../../../comman/IconsBtn"
+import Upload from "../../Upload"
 import ChipInput from "./chipInput"
 import RequirementsField from "./RequirementField"
-import { categories } from "../../../../../services/apis"
+import { categories } from "../../../../../../services/apis"
 
 
 

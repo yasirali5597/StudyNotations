@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import CourseInformationForm from "./CourseInformation/CourseInformationForm";
+import CourseInformationForm from "./CourseBuilder/CourseInformation/CourseInformationForm";
 import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
 import PublishCourse from "../AddCourse/PublishCourse/index"
 

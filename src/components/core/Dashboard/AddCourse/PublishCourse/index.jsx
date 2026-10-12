@@ -73,7 +73,7 @@ const PublishCourse  = () => {
 
   return (
     <div className="rounded-md border-[1px] bg-gray-800 p-6 border-gray-700 ">
-        <p> Publish Courses</p>
+        <p className="text-2xl mb-4 "> Publish Courses</p>
 
         <form  onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -83,9 +83,9 @@ const PublishCourse  = () => {
                     type='checkbox'
                     id='public'
                     {...register("public")}
-                    className='rounded h-4 w-4 '
+                    className='rounded h-4 w-5 ml-2 mr-4 '
                 />
-                <span>
+                <span className='text-gray-300 text-lg text-center ' >
                      Make this course as publics
                 </span>
 
@@ -94,12 +94,12 @@ const PublishCourse  = () => {
                 </label>
             </div>
 
-            <div className='flex justify-end gap-x-3'>
+            <div className='flex justify-end gap-x-3 mt-6 '>
                 <button
                     disabled={loading}
                     type="button"
                     onClick={goBack}
-                    className='flex items-center rounded-md bg-gray-300 p-6 '
+                    className='flex items-center rounded-md bg-gray-300 p-6 text-black px-9 py-3 text-lg font-semibold hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50'
                 >Back </button>
 
                 <IconsBtn disabled={loading } text="save change"/>

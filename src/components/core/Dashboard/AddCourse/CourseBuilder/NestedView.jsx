@@ -210,6 +210,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
   const handleDeleteSection = async (sectionId) => {
   try {
+    console.log("section Id " , sectionId);
+    console.log("course Id " , course?._id);
+    console.log("token Id " , token);
+
+
     const result = await deleteSection({
       sectionId,
       courseId: course._id,
@@ -226,6 +231,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
     setConfirmationModal(null);
   }
 };
+
   const handleDeleteSubSection = async (subSectionId, sectionId) => {
     try {
       console.log("Delete SubSection:", subSectionId, sectionId);
@@ -255,11 +261,17 @@ const NestedView = ({ handleChangeEditSectionName }) => {
   // }
 
   return (
+
     <div>
     {/* <h1 className="text-white">hellow</h1> */}
 
       <div className="rounded-lg bg-gray-700 p-6 px-8">
-        {course?.courseContent?.map((section) => (
+        {course?.courseContent?.map((section,index) => (
+          console.log("SECTION OBJECT:", section),
+          console.log("SECTION NAME:", section?.sectionName),
+           console.log("SECTION =", section),
+           console.log("SECTION TYPE =", typeof section),
+      
           <details
             key={section?._id}
             open
@@ -268,7 +280,9 @@ const NestedView = ({ handleChangeEditSectionName }) => {
             <summary className="flex items-center justify-between border-b border-gray-600 p-3 cursor-pointer">
               <div className="flex items-center gap-x-3">
                 <RxDropdownMenu />
-                <p>{section?.sectionName}</p>
+                <p className="text-gray-300">Section {index+1}: {section?.sectionName}</p>
+               
+                
               </div> 
 
               <div className="flex items-center gap-x-3">
@@ -288,13 +302,16 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
+                    console.log("SECTION OBJECT2:", section);
+                    console.log("SECTION ID2:", section?._id);
+
 
                     setConfirmationModal({
                       text1: "Delete This Section",
                       text2: "All lectures in this section will be deleted",
                       btn1Text: "Delete",
                       btn2Text: "Cancel",
-                      btn1Handler: () => handleDeleteSection(section?._id),
+                      btn1Handler: () => handleDeleteSection(section),
                       btn2Handler: () => setConfirmationModal(null),
                     });
                   }}
@@ -354,8 +371,14 @@ const NestedView = ({ handleChangeEditSectionName }) => {
               ))}
 
               <button
-                onClick={() => setAddSubSection(section?._id)}
-                className="mt-4 flex items-center gap-x-2 text-yellow-400"
+                onClick={() => {
+                  console.log("SECTION OBJECT3:", section);
+                  // console.log("SECTION ID3:", section?._id);
+                  // console.log("SECTION NAME3:", section?.sectionName);
+                  // console.log("clicked add lecture");
+                
+                setAddSubSection(section)}}
+                className="mt-4 flex items-center gap-x-2 text-yellow-500 "
               >
                 <AiOutlinePlus />
                 <p>Add Lecture</p>
@@ -364,6 +387,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
           </details>
         ))}
       </div>
+
+
+
+
+      
       {addSubSection ? (
         <SubSectionModal
           modalData={addSubSection}

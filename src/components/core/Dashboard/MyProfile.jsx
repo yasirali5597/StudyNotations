@@ -200,3 +200,12 @@ export default function MyProfile() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+{/* <p>{user?.additionalDetails?.dateOfBirth ?? "Add Date of Birth " } </p> */}

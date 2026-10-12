@@ -147,7 +147,7 @@ export function getPasswordResetToken(email, setEmailSent) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await apiConnector("POST", RESETPASSTOKEN_APIx, {
+      const response = await apiConnector("POST", RESETPASSTOKEN_API, {
         email,
       });
       console.log("reset passwrod token response ", response);

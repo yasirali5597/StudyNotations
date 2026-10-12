@@ -25,12 +25,17 @@ import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import AddCourse from "../src/components/core/Dashboard/AddCourse/index";
 import Catalog from "./pages/Catalog";
+import Instructor from "./components/core/Dashboard/AddCourse/InstructorDashboard/Instructor";
+import MyCourses from "./components/core/Dashboard/MyCourses";
+// import EditCourse from "./components/core/Dashboard/EditCourse";
+
+
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.profile);
+  const { User } = useSelector((state) => state.profile);
 
   return (
     <div className="w-screen min-h-screen bg-black    flex flex-col font-inter">
@@ -71,9 +76,9 @@ const App = () => {
         <Route
           path="verify-email"
           element={
-            // <OpenRoute>
+            <OpenRoute>
             <VerifyEmail />
-            //  </OpenRoute>
+              </OpenRoute>
           }
         />
 
@@ -113,23 +118,55 @@ const App = () => {
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/settings" element={<Settings />} />
-          {/* <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} /> */}
+          {/* <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+          <Route path="dashboard/cart" element={<Cart />} /> */}
+          {/* <Route path="dashboard/add-course" element={<AddCourse/> }/> */}
 
-          {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-            <>
-              <Route path="dashboard/cart" element={<Cart />} />
-              <Route
-                path="dashboard/enrolled-courses"
-                element={<EnrolledCourses />}
-              />
-            </>
-          )} */}
+          
+          {
+            User?.ACCOUNT_TYPE === ACCOUNT_TYPE.student && (
+              
+              <>
+              console.log("User is a student")
+              
+                <Route path="dashboard/cart"  element={<Cart/>}/>
+                <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
 
-          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-            <>
-              <Route path="dashboard/add-course" element={<AddCourse />} />
-            </>
-          )}
+              </>
+              
+            )
+          
+          }
+
+          {/* {
+            User?.ACCOUNT_TYPE === ACCOUNT_TYPE.Instructor && (
+              <>
+                <Route path="dashboard/add-course" element={<AddCourse/> }/>
+              </>
+
+            )
+          } */}
+
+
+           {
+        User?.accountType === ACCOUNT_TYPE.Instructor && (
+          <>
+          <Route path="dashboard/instructor" element={<Instructor />} />
+          <Route path="dashboard/add-course" element={<AddCourse />} />
+           <Route path="dashboard/my-courses" element={<MyCourses />} /> 
+          {/* <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} /> */}
+          
+          </>
+        )
+      }
+          
+
+
+
+
+           
+           
+
         </Route>
 
         <Route path="*" element={<Error />} />
